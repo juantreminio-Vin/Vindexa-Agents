@@ -1,0 +1,8 @@
+# Personal, never pushed: your own index of project folders, notes, scratch
+local/
+*.xlsx
+*.xlsm
+*.pdf
+*Passwords*
+*.key
+.env
