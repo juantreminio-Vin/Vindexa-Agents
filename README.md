@@ -11,7 +11,7 @@ A small team of AI agents that helps Vindexa test, investigate and explain the p
 | `CLAUDE.md` | The lead agent's protocol. Short on purpose. | Rarely |
 | `rules/` | Shared rules every agent follows (approvals, verdicts, live-first, writing). | Rarely |
 | `domains/<name>/` | One folder per product domain: `agent.md`, `flows/`, `memory.md`. | Often |
-| `.claude/agents/` | One specialist subagent per domain. | Rarely |
+| `.claude/agents/` | One specialist subagent per domain (Sonnet, read-only), plus `ui-reader` (Haiku, browser only). | Rarely |
 | `.claude/skills/` | Repeatable procedures (bug triage, UI check, ticket draft, ...). | Sometimes |
 | `benchmarks/` | How we score the product against consultant output. Method only. | Sometimes |
 | `templates/project/` | Empty fact sheet, source manifest and findings log for a new project. | Rarely |
@@ -29,6 +29,16 @@ Project data, customer documents, Drive links to project evidence, passwords, co
 - **Skills** (`.claude/skills/`): procedures.
 
 One owner per fact. If two files describe the same behavior, one is wrong. Reference, never copy.
+
+## Models and tokens
+
+- **Lead:** whatever model you start Claude Code with. Use Opus for hard verdicts, Sonnet otherwise.
+- **Domain specialists:** Sonnet. They can't edit files or use the browser, and they skip CLAUDE.md (that's the lead's protocol), so each handoff starts small.
+- **`ui-reader`:** Haiku, with only the browser tools. Page text stays in its context; the lead gets back a one-line-per-element record.
+- **Flows load by index.** Each `domains/*/agent.md` lists its flows; specialists load only the ones the brief needs. Add a line there when you add a flow.
+- **Quick path.** Plain questions skip delegation and the second review pass (see `CLAUDE.md`).
+
+UI checks need Claude Code running on your own computer with Claude in Chrome. Cloud sessions can do the repo, Linear and flow work but can't drive the browser.
 
 ## Live first
 
