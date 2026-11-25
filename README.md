@@ -11,11 +11,11 @@ A small team of AI agents that helps Vindexa test, investigate and explain the p
 | `CLAUDE.md` | The lead agent's protocol. Short on purpose. | Rarely |
 | `rules/` | Shared rules every agent follows (approvals, verdicts, live-first, writing). | Rarely |
 | `domains/<name>/` | One folder per product domain: `agent.md`, `flows/`, `memory.md`. | Often |
-| `.claude/agents/` | One specialist subagent per domain (Sonnet, read-only), plus `ui-reader` (Haiku, browser only). | Rarely |
+| `.claude/agents/` | One specialist per domain (Sonnet, read-only) and four helpers: `ui-reader`, `live-checker`, `evidence-reader`, `verdict-reviewer`. | Rarely |
 | `.claude/skills/` | Repeatable procedures (bug triage, UI check, ticket draft, ...). | Sometimes |
 | `benchmarks/` | How we score the product against consultant output. Method only. | Sometimes |
 | `templates/project/` | Empty fact sheet, source manifest and findings log for a new project. | Rarely |
-| `docs/` | Format specs (freshness stamps, memory entries). | Rarely |
+| `docs/` | Format specs (freshness stamps, memory entries), the dev app map, ticket owners. | Sometimes |
 | `local/` | Your own index of project folders. **Gitignored, never pushed.** | You |
 
 ## What is NOT in here
@@ -36,6 +36,10 @@ One owner per fact. If two files describe the same behavior, one is wrong. Refer
 - **Domain specialists:** Sonnet. They can't edit files or use the browser, and they skip CLAUDE.md (that's the lead's protocol), so each handoff starts small.
 - **`ui-reader`:** Haiku, with only the browser tools. Page text stays in its context; the lead gets back a one-line-per-element record.
 - **Flows load by index.** Each `domains/*/agent.md` lists its flows; specialists load only the ones the brief needs. Add a line there when you add a flow.
+- **Helpers:**
+  - `live-checker` (Haiku): code and Linear checks, one line per source.
+  - `evidence-reader` (Sonnet): values from project documents with exact citations. Sonnet, not Haiku, because numbers must be exact.
+  - `verdict-reviewer` (Sonnet): tries to refute a verdict it didn't produce.
 - **Quick path.** Plain questions skip delegation and the second review pass (see `CLAUDE.md`).
 
 UI checks need Claude Code running on your own computer with Claude in Chrome. Cloud sessions can do the repo, Linear and flow work but can't drive the browser.
