@@ -2,6 +2,8 @@
 name: ui-check
 description: Verify behavior on the live app UI with Claude in Chrome. Use to confirm what the product actually shows before stating a finding.
 ---
+Run this through the `ui-reader` subagent (Haiku) rather than in the lead's conversation, so page text never enters the lead's context. The lead sends the brief; `ui-reader` returns the record.
+
 - Dev environment only, test organization only. Never customer data.
 - Start with the tab context; open a new tab rather than reusing one.
 - Read page text and form fields. Do not take screenshots.
